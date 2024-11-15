@@ -63,6 +63,11 @@ class ProfileController extends Controller
         return view('timeline');
     }
 
+    public function mypost()
+    {
+        return view('mypost');
+    }
+
 
 
 
