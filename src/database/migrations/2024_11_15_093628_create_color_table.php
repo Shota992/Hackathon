@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('color_name');
             $table->string('color_code');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

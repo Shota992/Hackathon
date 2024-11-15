@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->string('batch');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
