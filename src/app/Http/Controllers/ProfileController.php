@@ -68,6 +68,11 @@ class ProfileController extends Controller
         return view('mypost');
     }
 
+    public function index()
+    {
+        return view('chat.index');
+    }
+
 
 
 

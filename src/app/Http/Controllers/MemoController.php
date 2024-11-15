@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class MemoController extends Controller
 {
-    public function creatememo()
+    public function memocreate()
     {
-        return view('creatememo');
+        return view('memo/create');
     }
 
     // public function store(Request $request)

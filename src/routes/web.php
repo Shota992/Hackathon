@@ -32,8 +32,10 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
 Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
+Route::get('/chat/index', [ProfileController::class, 'index'])->name('chat.index');
 
-Route::get('/creatememo', [MemoController::class, 'creatememo'])->name('creatememo');
+
+Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
 // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
 
 require __DIR__.'/auth.php';
