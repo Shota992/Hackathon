@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
-            $table->foreign('batch_icon_id')->references('id')->on('batch_icons');
             $table->string('batch');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

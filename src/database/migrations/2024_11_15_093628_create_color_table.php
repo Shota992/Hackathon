@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('icons', function (Blueprint $table) {
+        Schema::create('color', function (Blueprint $table) {
             $table->id();
             $table->string('color_name');
             $table->string('color_code');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('icons');
+        Schema::dropIfExists('color');
     }
 };
