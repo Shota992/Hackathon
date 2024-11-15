@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MemoController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/timeline', [PostController::class, 'timeline'])->name('timeline');
+Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
+
+Route::get('/creatememo', [MemoController::class, 'creatememo'])->name('creatememo');
+// Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
 
 require __DIR__.'/auth.php';
