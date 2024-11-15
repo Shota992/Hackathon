@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('memos', function (Blueprint $table) {
             $table->id();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->string('content');
-            $table->foreign('posting_id')->references('id')->on('postings');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('posting_id');
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('posting_id')->references('id')->on('postings')->onDelete('cascade');
         });
     }
 
