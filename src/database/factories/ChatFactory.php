@@ -16,8 +16,6 @@ class ChatFactory extends Factory
         return [
             'permit' => $this->faker->boolean,
             'posting_id' => Posting::inRandomOrder()->first()->id, // ランダムな投稿
-            'post_user_id' => User::inRandomOrder()->first()->id, // ランダムな投稿者
-            'listener_user_id' => User::inRandomOrder()->first()->id, // ランダムなリスナー
         ];
     }
 }
