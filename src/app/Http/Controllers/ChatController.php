@@ -13,22 +13,19 @@ use Illuminate\Support\Facades\Auth;
 class ChatController extends Controller
     {
 
-    public function chat()
-    {
-        $userId = Auth::id();
-
-        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
-            $query->where('post_user_id', $userId)
-                    ->orWhere('listener_user_id', $userId);
-        })->with('posting.user')->get();
-
-        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
-            $query->where('post_user_id', $userId)
-                    ->orWhere('listener_user_id', $userId);
-        })->with('posting.user')->paginate(20); // 1ページあたり10件
-
-        return view('chat.index', compact('chats'));
-    }
+        public function chat()
+        {
+            $userId = Auth::id();
+            // チャットの取得と並び替え
+            $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
+                    $query->where('post_user_id', $userId)
+                            ->orWhere('listener_user_id', $userId);
+                })
+                ->with('posting.user')
+                ->orderBy('created_at', 'desc') // 新しい順に並び替え
+                ->paginate(20); // 1ページあたり20件
+            return view('chat.index', compact('chats'));
+        }
 
     public function chatShow($id)
     {
@@ -127,5 +124,3 @@ class ChatController extends Controller
 
     
 }
-
-
