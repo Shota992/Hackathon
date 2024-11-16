@@ -45,9 +45,11 @@ Route::middleware('auth')->group(function () {
     
     // チャット機能
     Route::get('/chat/index', [ChatController::class, 'chat'])->name('chat.index');
+    Route::post('/chat/create', [ChatController::class, 'create'])->name('chat.create');
     Route::get('/chat/show/{id}', [ChatController::class, 'chatShow'])->name('chat.show');
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
-    
+    Route::patch('/chat/{posting}/toggle-anonymity', [ChatController::class, 'toggleAnonymity'])->name('chat.toggle-anonymity');
+
     // メモ機能
     Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
     Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
@@ -65,4 +67,30 @@ Route::middleware('auth')->group(function () {
   });
     require __DIR__.'/auth.php';
     
+
+
+# メモ一覧画面
+Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
+Route::post('/memo/{id}', [MemoController::class, 'softDelete'])->name('memo.softDelete');
+
+Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
+Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
+
+
+
+
+
+// Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+
+//非公開ディレクトリから画像を表示するためのカスタムルート設定
+Route::get('/user-icon/{filename}', function ($filename) {
+    $path = 'public/private/user_icons/' . $filename;
+    if (!Storage::exists($path)) {
+        abort(404);
+    }
+    return Storage::download($path);
+})->name('user.icon');
+
+
+require __DIR__.'/auth.php';
 

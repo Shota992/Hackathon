@@ -30,7 +30,6 @@
                     <p class="font-bold text-4xl">LOG IN</p>
                 </div>
                 {{ $slot }}
-
             </div>
 
 

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\ChatUser;
 use App\Models\Message;
+use App\Models\Posting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class ChatController extends Controller
 {
+
   public function chat()
   {
       $userId = Auth::id();
@@ -49,6 +53,20 @@ class ChatController extends Controller
           'send_user_id' => Auth::id(),
       ]);
 
+
       return redirect()->route('chat.show', $message->chat_id);
   }
-}
+
+    public function toggleAnonymity($postingId)
+    {
+        // 投稿を取得
+        $posting = Posting::findOrFail($postingId);
+
+        // anonymity の値を切り替え
+        $posting->anonymity = !$posting->anonymity;
+        $posting->save();
+
+        // リダイレクト先で状態が更新される
+        return redirect()->back()->with('status', '匿名設定が変更されました。');
+    }
+
