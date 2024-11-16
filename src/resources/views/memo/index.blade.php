@@ -46,4 +46,4 @@
             </div>
         </div>
     </div>
-    </x-bosy-common>
+    </x-body-common>
