@@ -7,7 +7,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Models\Posting;
+use App\Models\User;
 use App\Models\Chat;
 
 class ProfileController extends Controller
@@ -59,29 +62,45 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function timeline()
+    public function sidebar()
     {
-        return view('timeline');
+        $user = Auth::user();
+        return view('components.sidebar', compact('user'));
     }
 
-    public function mypost()
+    public function editProfile($id)
     {
-        return view('mypost');
+        $user = User::findOrFail($id);
+        return view('auth.user-edit', compact('user'));
     }
 
-    public function chat()
+    public function updateProfile(Request $request, $id)
     {
-        $userId = Auth::id();
+        $user = User::findOrFail($id);
 
-        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
-            $query->where('post_user_id', $userId)
-                  ->orWhere('listener_user_id', $userId);
-        })->with('posting.user')->get();
+        $request->validate([
+            'generation' => ['required', 'numeric', 'between:3.0,7.0'],
+            'target' => ['required', 'string', 'max:255'],
+            'icon_image' => ['nullable', 'image', 'max:2048'],
+        ]);
 
-        return view('chat.index', compact('chats'));
+        $user->generation = $request->generation;
+        $user->target = $request->target;
+
+        if ($request->hasFile('icon_image')) {
+            // 古い画像を削除
+            if ($user->icon_image) {
+                Storage::delete('public/private/user_icons/' . $user->icon_image); // 古いファイルを削除
+            }
+    
+            // 新しい画像を保存
+            $path = $request->file('icon_image')->store('public/private/user_icons'); // 指定ディレクトリに保存
+            $user->icon_image = basename($path); // ファイル名のみ保存
+        }
+
+        $user->save();
+
+        return redirect()->route('user.editProfile', $user->id)->with('success', 'User information updated successfully.');
     }
-
-
-
 
 }
