@@ -43,7 +43,7 @@ Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
 Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
 Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
-Route::get('/chat/index', [ProfileController::class, 'index'])->name('chat.index');
+Route::get('/chat/index', [ProfileController::class, 'chat'])->name('chat.index');
 
 
 Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
