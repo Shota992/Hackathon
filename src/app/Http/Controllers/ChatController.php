@@ -11,51 +11,56 @@ use Illuminate\Support\Facades\Auth;
 
 
 class ChatController extends Controller
-{
+    {
 
-  public function chat()
-  {
-      $userId = Auth::id();
+    public function chat()
+    {
+        $userId = Auth::id();
 
-      $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
-          $query->where('post_user_id', $userId)
-                ->orWhere('listener_user_id', $userId);
-      })->with('posting.user')->get();
+        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
+            $query->where('post_user_id', $userId)
+                    ->orWhere('listener_user_id', $userId);
+        })->with('posting.user')->get();
 
-      return view('chat.index', compact('chats'));
-  }
+        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
+            $query->where('post_user_id', $userId)
+                    ->orWhere('listener_user_id', $userId);
+        })->with('posting.user')->paginate(20); // 1ページあたり10件
 
-  public function chatShow($id)
-  {
-      $chat = Chat::with(['posting.user', 'chatUsers.postUser', 'chatUsers.listenerUser', 'messages.sender'])
-                  ->findOrFail($id);
-  
-      // メッセージを取得し、ビューに渡す
-      $messages = $chat->messages()->with('sender')->orderBy('id')->get();
-  
-      $posting = $chat->posting;
-      $chatUser = $chat->chatUsers->first();
-  
-      // compactで'messages'をビューに渡す
-      return view('chat.show', compact('chat', 'posting', 'chatUser', 'messages'));
-  }
+        return view('chat.index', compact('chats'));
+    }
 
-  public function sendMessage(Request $request)
-  {
-      $request->validate([
-          'message' => 'required|string|max:255',
-          'chat_id' => 'required|exists:chats,id',
-      ]);
+    public function chatShow($id)
+    {
+        $chat = Chat::with(['posting.user', 'chatUsers.postUser', 'chatUsers.listenerUser', 'messages.sender'])
+                    ->findOrFail($id);
+    
+        // メッセージを取得し、ビューに渡す
+        $messages = $chat->messages()->with('sender')->orderBy('id')->get();
+    
+        $posting = $chat->posting;
+        $chatUser = $chat->chatUsers->first();
+    
+        // compactで'messages'をビューに渡す
+        return view('chat.show', compact('chat', 'posting', 'chatUser', 'messages'));
+    }
 
-      $message = Message::create([
-          'message' => $request->message,
-          'chat_id' => $request->chat_id,
-          'send_user_id' => Auth::id(),
-      ]);
+    public function sendMessage(Request $request)
+    {
+        $request->validate([
+            'message' => 'required|string|max:255',
+            'chat_id' => 'required|exists:chats,id',
+        ]);
+
+        $message = Message::create([
+            'message' => $request->message,
+            'chat_id' => $request->chat_id,
+            'send_user_id' => Auth::id(),
+        ]);
 
 
-      return redirect()->route('chat.show', $message->chat_id);
-  }
+        return redirect()->route('chat.show', $message->chat_id);
+    }
 
     public function toggleAnonymity($postingId)
     {
@@ -71,7 +76,7 @@ class ChatController extends Controller
     }
 
     public function create(Request $request)
-{
+    {
     $request->validate([
         'posting_id' => 'required|exists:postings,id',
     ]);
@@ -94,6 +99,9 @@ class ChatController extends Controller
 
     // 作成したチャット画面にリダイレクト
     return redirect()->route('chat.show', $chat->id);
+    }
+
+    
 }
 
-  }
+
