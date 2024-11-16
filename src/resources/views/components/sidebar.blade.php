@@ -4,23 +4,42 @@
             <div class="w-24">
                 <img src="{{ asset('images/title_icon_white.png') }}" alt="CoreConnect">
             </div>
-            <div class="grid grid-cols-[25%,75%] items-center">
-                @if (isset($user) && $user->icon_image)
-                    <div class="mt-2">
-                        <img src="{{ route('user.icon', $user->icon_image) }}" alt="User Icon"
-                            class="w-10 h-10 rounded-full">
+            @if (isset($user))
+                <a href="{{ route('user.editProfile', ['id' => $user->id]) }}" class="flex flex-col gap-4">
+                    <div class="grid grid-cols-[25%,75%] items-center">
+                        @if ($user->icon_image)
+                            <div class="mt-2">
+                                <img src="{{ route('user.icon', $user->icon_image) }}" alt="User Icon"
+                                    class="w-10 h-10 rounded-full">
+                            </div>
+                        @else
+                            <div class="mt-2">
+                                <img src="{{ asset('images/defaltIcon.png') }}" alt="User Icon"
+                                    class="w-10 h-10 rounded-full">
+                            </div>
+                        @endif
+                        <p class="text-xl">{{ $user->name }} さん</p>
                     </div>
-                @else
-                    <div class="mt-2">
-                        <img src="{{ asset('images/defaltIcon.png') }}" alt="User Icon" class="w-10 h-10 rounded-full">
+                    <div>
+                        <p>目標：</p>
+                        <p>{{ $user->target ?? '目標が設定されていません' }}</p>
                     </div>
-                @endif
-                <p class="text-xl">{{ $user->name ?? 'ゲスト' }} さん</p>
-            </div>
-            <div>
-                <p>目標：</p>
-                <p>{{ $user->target ?? '目標が設定されていません' }}</p>
-            </div>
+                </a>
+            @else
+                <div class="flex flex-col gap-4">
+                    <div class="grid grid-cols-[25%,75%] items-center">
+                        <div class="mt-2">
+                            <img src="{{ asset('images/defaltIcon.png') }}" alt="User Icon"
+                                class="w-10 h-10 rounded-full">
+                        </div>
+                        <p class="text-xl">ゲスト さん</p>
+                    </div>
+                    <div>
+                        <p>目標：</p>
+                        <p>目標が設定されていません</p>
+                    </div>
+                </div>
+            @endif
         </div>
         <ul class="flex flex-col gap-3 text-xl pl-4">
             <li><a href="{{ route('timeline') }} " class="hover:underline">TIMELINE</a></li>

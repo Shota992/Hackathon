@@ -56,6 +56,6 @@ class PostController extends Controller
         $posts = Posting::orderBy('created_at', 'desc')->get(); 
         $user = Auth::user();
         $page = Posting::paginate(10);
-        return view('mypost', compact('messages', 'posts','user','page'));
+        return view('posts.mypost', compact('messages', 'posts','user','page'));
     }
 }
