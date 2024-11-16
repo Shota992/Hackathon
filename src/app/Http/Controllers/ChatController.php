@@ -34,16 +34,23 @@ class ChatController extends Controller
     {
         $chat = Chat::with(['posting.user', 'chatUsers.postUser', 'chatUsers.listenerUser', 'messages.sender'])
                     ->findOrFail($id);
-    
-        // メッセージを取得し、ビューに渡す
+
+        // 現在ログインしているユーザーID
+        $loggedInUserId = Auth::id();
+
+        // 投稿者かリスナーかの識別
+        $isPostUser = $chat->chatUsers->where('post_user_id', $loggedInUserId)->isNotEmpty();
+        $isListenerUser = $chat->chatUsers->where('listener_user_id', $loggedInUserId)->isNotEmpty();
+
+        // メッセージを取得
         $messages = $chat->messages()->with('sender')->orderBy('id')->get();
-    
+
         $posting = $chat->posting;
         $chatUser = $chat->chatUsers->first();
-    
-        // compactで'messages'をビューに渡す
-        return view('chat.show', compact('chat', 'posting', 'chatUser', 'messages'));
+
+        return view('chat.show', compact('chat', 'posting', 'chatUser', 'messages', 'isPostUser', 'isListenerUser'));
     }
+
 
     public function sendMessage(Request $request)
     {
@@ -59,7 +66,9 @@ class ChatController extends Controller
         ]);
 
 
-        return redirect()->route('chat.show', $message->chat_id);
+        // return redirect()->route('chat.show', $message->chat_id) . '#latest-message';
+        return redirect()->route('chat.show', $message->chat_id)->withFragment('latest-message');
+
     }
 
     public function toggleAnonymity($postingId)
