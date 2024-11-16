@@ -2,7 +2,7 @@
   <body class="h-screen w-screen overflow-hidden">
       <main class="flex">
           <!-- サイドバーをコンポーネントとして呼び出す -->
-          <x-sidebar username="{{ Auth::user()->name }}" goal="{{ Auth::user()->target }}" />
+          {{-- <x-sidebar :user="$user"/> --}}
 
           <!-- メインコンテンツ -->
           <div class="main w-full bg-white h-screen pt-16 px-20 pb-20">
