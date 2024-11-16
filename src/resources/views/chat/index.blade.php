@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-6 mb-12">
         @forelse ($chats as $chat)
             <a href="{{ route('chat.show', $chat->id) }}">
-                <div class="flex items-center gap-4 bg-gray-200 w-full shadow-md mt-4 ml-4 p-4">
+                <div class="flex items-center gap-4 bg-white w-full shadow-md mt-4 ml-4 p-4">
                     <div class="flex justify-end text-xs">
                         最終更新日：
                         {{ $chat->posting->created_at->format('Y/m/d') }}
