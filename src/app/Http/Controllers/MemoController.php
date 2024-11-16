@@ -23,7 +23,6 @@ class MemoController extends Controller
         $delmemo = Memo::findOrFail($id);
         $delmemo->delete(); // soft deleteを実行
         
-
         return redirect()->back()->with('success', 'Post deleted successfully.');
     }
 
