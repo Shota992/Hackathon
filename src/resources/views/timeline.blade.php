@@ -32,7 +32,7 @@
                   <form action="{{ route('chat.create') }}" method="POST" class="flex justify-end text-sm pr-4">
                       @csrf
                       <input type="hidden" name="posting_id" value="{{ $post->id }}">
-                      <x-primary-button>コメント</x-primary-button>
+                      <x-primary-button class="text-xs px-3 py-1">コメントする</x-primary-button>
                   </form>
               </div>
           </div>
