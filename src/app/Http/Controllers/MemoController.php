@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class MemoController extends Controller
 {
-    public function index()
-    {
-        $user = Auth::user(); // ログイン中のユーザーを取得
-        $memos = Memo::all(); // すべてのメモを取得
-        return view('memo.index', compact('user', 'memos')); // 両方のデータをビューに渡す
-    }
+  public function index()
+  {
+      $user = Auth::user(); // ログイン中のユーザーを取得
+      $memos = Memo::orderBy('updated_at', 'desc')->get(); // 更新日時で降順に並び替え
+      return view('memo.index', compact('user', 'memos')); // 両方のデータをビューに渡す
+  }
 
     public function softDelete($id)
     {
@@ -46,10 +46,10 @@ class MemoController extends Controller
             'title' => $request->title,
             'content' => $request->input('content'),
             'user_id' => $userID,
-            'posting_id' => 1,
+            'posting_id' => null,
         ]);
 
-        //return redirect()->route('memo.index')->with('success', 'メモが保存されました！');
+        return redirect()->route('memo.index')->with('success', 'メモが保存されました！');
     }
 
     public function edit($id)
