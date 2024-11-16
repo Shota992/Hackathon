@@ -12,16 +12,16 @@
 
         <div class="flex max-w-4xl mx-auto px-6 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {{-- @foreach ($articles as $article) --}}
+                @foreach ($memos as $memo)
 
                 <div class="max-w-md bg-white shadow-lg rounded-lg overflow-hidden flex flex-col justify-between">
                     <a href="">
                         <div class="p-4">
-                            <h3 class="text-lg font-semibold py-1">タイトル１</h3>
+                            <h3 class="text-lg font-semibold py-1">{{ $memo->title }}</h3>
                             <div>
-                                <p class="text-xs text-gray-600 py-3">2024/11/15</p>
+                                <p class="text-xs text-gray-600 py-3">{{ $memo->created_at }}</p>
                                 <p class="text-gray-700 text-sm p-2 pb-4">
-                                    最近、自分の言いたいことがうまく伝わらず、誤解を招くことが多いです。本当は相手に寄り添いたいのに、言葉足らずや説明不足で距離を感じる瞬間が増え、どう改善すればいいのか悩んでいます。
+                                    {{ $memo->content }}
                                 </p>
                             </div>
                         </div>
@@ -30,14 +30,14 @@
                     <div class="flex justify-end bg-gray-300 px-3 py-2">
                         <a href="">
                             <x-secondary-button>
-                                編集
+                                削除
                             </x-secondary-button>
                         </a>
                     </div>
                     {{-- @endif --}}
                 </div>
                 
-                {{-- @endforeach --}}
+                @endforeach
             </div>
         </div>
     </body>

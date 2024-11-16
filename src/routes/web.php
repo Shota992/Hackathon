@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
 # メモ一覧画面
 Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
 
+Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
+Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
+
 
 
 //新規投稿登録画面のルート設定
@@ -45,8 +48,6 @@ Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline'
 Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
 Route::get('/chat/index', [ProfileController::class, 'chat'])->name('chat.index');
 
-
-Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
 // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
 
 
