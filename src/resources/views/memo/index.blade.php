@@ -29,9 +29,12 @@
                     {{-- @if (Auth::id() === $article->user_id) --}}
                     <div class="flex justify-end bg-gray-300 px-3 py-2">
                         <a href="">
-                            <x-secondary-button>
-                                削除
-                            </x-secondary-button>
+                            <form action="{{ route('memo.softDelete', $memo->id) }}" method="POST">
+                                @csrf
+                                <x-secondary-button>
+                                    削除
+                                </x-secondary-button>
+                            </form>
                         </a>
                     </div>
                     {{-- @endif --}}

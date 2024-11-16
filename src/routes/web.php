@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
 
 # メモ一覧画面
 Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
+Route::post('/memo/{id}', [MemoController::class, 'softDelete'])->name('memo.softDelete');
 
 Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
 Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
