@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Chat;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
             ChatSeeder::class,
             MessageSeeder::class,
             MemoSeeder::class,
+            ChatUserSeeder::class,
         ]);
     }
 }
