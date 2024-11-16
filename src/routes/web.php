@@ -67,3 +67,29 @@ Route::middleware('auth')->group(function () {
     require __DIR__.'/auth.php';
     
 
+
+# メモ一覧画面
+Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
+Route::post('/memo/{id}', [MemoController::class, 'softDelete'])->name('memo.softDelete');
+
+Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
+Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
+
+
+
+
+
+// Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+
+//非公開ディレクトリから画像を表示するためのカスタムルート設定
+Route::get('/user-icon/{filename}', function ($filename) {
+    $path = 'public/private/user_icons/' . $filename;
+    if (!Storage::exists($path)) {
+        abort(404);
+    }
+    return Storage::download($path);
+})->name('user.icon');
+
+
+require __DIR__.'/auth.php';
+
