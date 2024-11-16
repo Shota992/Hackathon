@@ -100,7 +100,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('user.editProfile', $user->id)->with('success', 'User information updated successfully.');
+        return redirect()->route('user.editProfile', $user->id)->with('success', 'プロフィールの情報が更新されました。');
     }
 
 }
