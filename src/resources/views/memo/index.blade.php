@@ -1,11 +1,14 @@
 <x-app-layout>
+    <!-- サイドバーを追加 -->
+    <x-sidebar :user="$user" />
     {{-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            投稿一覧
+            メモ一覧
         </h2>
     </x-slot> --}}
 
     <body>
+
         
 
         <div class="flex max-w-4xl mx-auto px-6 py-8">
@@ -34,11 +37,21 @@
                                 </x-secondary-button>
                             </form>
                         </a>
+                        {{-- @if (Auth::id() === $article->user_id) --}}
+                        <div class="flex justify-end bg-gray-300 px-3 py-2">
+                            <a href="">
+                                <x-secondary-button>
+                                    編集
+                                </x-secondary-button>
+                            </a>
+                        </div>
+                        {{-- @endif --}}
                     </div>
-                    {{-- @endif --}}
+
+                    {{-- @endforeach --}}
                 </div>
-                
                 @endforeach
+
             </div>
         </div>
     </body>
