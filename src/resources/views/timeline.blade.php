@@ -4,7 +4,7 @@
     <x-sidebar  :name="Auth::user()->name" :target="Auth::user()->target" />
 
     <div class="main w-full bg-white h-screen pt-16 px-20 pb-20">
-        <h2 class="text-xl mb-4 border-b-2">TIMELINE</h2>
+        <h2 class="text-xl mb-4 border-b-2 font-adamina">TIMELINE</h2>
         <div class="w-full h-full bg-red-200 p-8 overflow-y-auto">
             <div class="flex flex-col gap-6 mb-12">
                 @foreach ($posts as $post)
