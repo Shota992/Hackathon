@@ -1,8 +1,7 @@
 <x-app-layout>
-
   <main class="flex">
-      <x-sidebar :name="$user->name" :target="$user->target" />
-
+      <x-sidebar :user="$user" />
+      
       <div class="main w-full bg-white h-screen ml-60 pt-10 px-12 pb-20">
           <h2 class="text-2xl mb-4 border-b-2 font-adamina">TIMELINE</h2>
           <div class="px-8">

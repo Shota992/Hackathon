@@ -61,11 +61,11 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function sidebar()
-    {
-        $user = Auth::user();
-        return view('components.sidebar', compact('user'));
-    }
+    // public function sidebar()
+    // {
+    //     $user = Auth::user();
+    //     return view('components.sidebar', compact('user'));
+    // }
 
     public function editProfile($id)
     {
@@ -73,32 +73,32 @@ class ProfileController extends Controller
         return view('auth.user-edit', compact('user'));
     }
 
-    public function updateProfile(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
+    // public function updateProfile(Request $request, $id)
+    // {
+    //     $user = User::findOrFail($id);
 
-        $request->validate([
-            'generation' => ['required', 'numeric', 'between:3.0,7.0'],
-            'target' => ['required', 'string', 'max:255'],
-            'icon_image' => ['nullable', 'image', 'max:2048'],
-        ]);
+    //     $request->validate([
+    //         'generation' => ['required', 'numeric', 'between:3.0,7.0'],
+    //         'target' => ['required', 'string', 'max:255'],
+    //         'icon_image' => ['nullable', 'image', 'max:2048'],
+    //     ]);
 
-        $user->generation = $request->generation;
-        $user->target = $request->target;
+    //     $user->generation = $request->generation;
+    //     $user->target = $request->target;
 
-        if ($request->hasFile('icon_image')) {
-            // 古い画像を削除
-            if ($user->icon_image) {
-                Storage::delete($user->icon_image);
-            }
+    //     if ($request->hasFile('icon_image')) {
+    //         // 古い画像を削除
+    //         if ($user->icon_image) {
+    //             Storage::delete($user->icon_image);
+    //         }
 
-            // 新しい画像を保存
-            $user->icon_image = $request->file('icon_image')->store('icon_images', 'public');
-        }
+    //         // 新しい画像を保存
+    //         $user->icon_image = $request->file('icon_image')->store('icon_images', 'public');
+    //     }
 
-        $user->save();
+    //     $user->save();
 
-        return redirect()->route('user.editProfile', $user->id)->with('success', 'User information updated successfully.');
-    }
+    //     return redirect()->route('user.editProfile', $user->id)->with('success', 'User information updated successfully.');
+    // }
 
 }
