@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Memo;
 use Illuminate\Support\Facades\Auth;
 
+
 class MemoController extends Controller
 {
-    public function index(){
-        $memos = Memo::all();
-        return view('memo.index', ['memos' => $memos]);
+    public function index()
+    {
+        $user = Auth::user(); // ログイン中のユーザーを取得
+        $memos = Memo::all(); // すべてのメモを取得
+        return view('memo.index', compact('user', 'memos')); // 両方のデータをビューに渡す
     }
+
+
 
     public function softDelete($id)
     {
@@ -21,6 +26,7 @@ class MemoController extends Controller
 
         return redirect()->back()->with('success', 'Post deleted successfully.');
     }
+
 
     public function create(){
         $userID = Auth::id();
@@ -49,4 +55,3 @@ class MemoController extends Controller
         //return redirect()->route('memo.index')->with('success', 'メモが保存されました！');
     }
 }
-
