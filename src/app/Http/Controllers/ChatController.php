@@ -77,28 +77,43 @@ class ChatController extends Controller
 
     public function create(Request $request)
     {
-    $request->validate([
-        'posting_id' => 'required|exists:postings,id',
-    ]);
-
-    // 対象の投稿を取得
-    $posting = Posting::findOrFail($request->posting_id);
-
-    // 新しいチャットを作成
-    $chat = Chat::create([
-        'permit' => 1, // 必要に応じて変更
-        'posting_id' => $posting->id,
-    ]);
-
-    // チャットユーザーを登録
-    ChatUser::create([
-        'chat_id' => $chat->id,
-        'post_user_id' => $posting->user_id,
-        'listener_user_id' => Auth::id(),
-    ]);
-
-    // 作成したチャット画面にリダイレクト
-    return redirect()->route('chat.show', $chat->id);
+        $request->validate([
+            'posting_id' => 'required|exists:postings,id',
+        ]);
+    
+        // 対象の投稿を取得
+        $posting = Posting::findOrFail($request->posting_id);
+    
+        // ログイン中のユーザー
+        $listenerUserId = Auth::id();
+    
+        // 既存のチャットを検索
+        $existingChat = Chat::where('posting_id', $posting->id)
+            ->whereHas('chatUsers', function ($query) use ($posting, $listenerUserId) {
+                $query->where('post_user_id', $posting->user_id)
+                      ->where('listener_user_id', $listenerUserId);
+            })->first();
+    
+        if ($existingChat) {
+            // 既存のチャットがある場合はそのチャットにリダイレクト
+            return redirect()->route('chat.show', $existingChat->id);
+        }
+    
+        // 新しいチャットを作成
+        $chat = Chat::create([
+            'permit' => 1, // 必要に応じて変更
+            'posting_id' => $posting->id,
+        ]);
+    
+        // チャットユーザーを登録
+        ChatUser::create([
+            'chat_id' => $chat->id,
+            'post_user_id' => $posting->user_id,
+            'listener_user_id' => $listenerUserId,
+        ]);
+    
+        // 作成したチャット画面にリダイレクト
+        return redirect()->route('chat.show', $chat->id);
     }
 
     
