@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Posting;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -58,15 +60,13 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function timeline()
+    public function sidebar()
     {
-        return view('timeline');
+        $user = Auth::user();
+        return view('components.sidebar', compact('user'));
     }
 
-    public function mypost()
-    {
-        return view('mypost');
-    }
+
 
     public function index()
     {

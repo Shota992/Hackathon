@@ -30,8 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
-Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
+Route::get('/timeline', [PostController::class, 'timeline'])->name('timeline');
+Route::get('/mypost', [PostController::class, 'mypost'])->name('mypost');
 Route::get('/chat/index', [ProfileController::class, 'index'])->name('chat.index');
 
 
