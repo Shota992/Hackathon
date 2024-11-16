@@ -62,11 +62,11 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function sidebar()
-    {
-        $user = Auth::user();
-        return view('components.sidebar', compact('user'));
-    }
+    // public function sidebar()
+    // {
+    //     $user = Auth::user();
+    //     return view('components.sidebar', compact('user'));
+    // }
 
     public function editProfile($id)
     {
