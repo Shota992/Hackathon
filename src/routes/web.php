@@ -48,7 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/chat/create', [ChatController::class, 'create'])->name('chat.create');
     Route::get('/chat/show/{id}', [ChatController::class, 'chatShow'])->name('chat.show');
     Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
-    
+    Route::patch('/chat/{posting}/toggle-anonymity', [ChatController::class, 'toggleAnonymity'])->name('chat.toggle-anonymity');
+
     // メモ機能
     Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
     Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
