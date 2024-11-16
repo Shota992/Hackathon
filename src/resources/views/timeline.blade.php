@@ -1,12 +1,12 @@
 <x-body-common :title="'TIMELINE'">
-  <div class="flex flex-col gap-6 mb-12">
+    <div class="flex flex-col gap-6 mb-12">
       @foreach ($posts as $post)
           <div class="flex flex-col gap-4 post-card bg-white w-full shadow-md px-6 pt-4 pb-8">
               <div>
                   <div class="flex justify-end text-xs">{{ $post->created_at->format('Y/m/d') }}</div>
                   <div class="flex items-center gap-4">
                       @if ($post->anonymity == 1)
-                          {{-- 匿名の場合 --}}
+                           {{-- 匿名の場合 --}}
                           <div class="w-8 h-8 rounded-full overflow-hidden">
                               <img src="{{ asset('images/who.png') }}" alt="Anonymous Icon"
                                   class="object-cover w-full h-full">

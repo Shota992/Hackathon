@@ -77,9 +77,6 @@ Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create
 Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
 
 
-
-
-
 // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
 
 //非公開ディレクトリから画像を表示するためのカスタムルート設定
