@@ -1,4 +1,7 @@
 <x-guest-layout>
+    <div class="flex justify-center">
+        <p class="font-bold text-2xl">SINE UP</p>
+    </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 

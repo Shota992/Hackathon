@@ -17,8 +17,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role')->default('user');
+            $table->float('generation');
+            $table->string('target')->nullable(); // NULLを許容
+            $table->string('icon_image')->nullable(); // NULLを許容
+            $table->unsignedBigInteger('color_id')->nullable(); // NULLを許容
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

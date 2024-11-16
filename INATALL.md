@@ -111,7 +111,9 @@
 2. nodeコンテナに入っていることを確認
    - (入っていなければ、`docker compose exec node sh`)
 3. `npm install`
+# envファイルがなければ
 4. `cp .env.example .env`
+# 一旦これもせずだめだったら
 5. `php artisan key:generate`
 6. `npm run dev` or `npm run build`
     - buildは現時点のファイルを読み込んでファイルを生成します (build後にtailwindのクラス名を追加した場合は再度buildが必要です)
