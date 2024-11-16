@@ -47,7 +47,9 @@ Route::get('/chat/show/{id}', [ChatController::class, 'chatShow'])->name('chat.s
 Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 
 // メモ機能
+Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
 Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
 // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+
 
 require __DIR__.'/auth.php';

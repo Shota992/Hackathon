@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use App\Models\Memo;
+use App\Models\Memo;
 
 
 
 class MemoController extends Controller
 {
+    public function index(){
+        $memos = Memo::all();
+        return view('memo.index', ['memos' => $memos]);
+    }
+    
     public function memocreate()
     {
         return view('memo/create');
@@ -30,5 +35,6 @@ class MemoController extends Controller
 
     //     メモが保存された後のリダイレクトやメッセージ表示
     //     return redirect()->route('timeline.index')->with('success', 'メモが作成されました！');
-    // }
+    // }>>>>>>> ac235eed54afc19643930fc0813440eb4ba3f62a
 }
+
