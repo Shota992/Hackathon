@@ -12,7 +12,6 @@ use App\Models\Posting;
 use App\Models\User;
 use App\Models\Chat;
 
-
 class ProfileController extends Controller
 {
     /**
@@ -67,22 +66,5 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('components.sidebar', compact('user'));
     }
-
-
-
-    public function chat()
-    {
-        $userId = Auth::id();
-
-        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
-            $query->where('post_user_id', $userId)
-                    ->orWhere('listener_user_id', $userId);
-        })->with('posting.user')->get();
-
-        return view('chat.index', compact('chats'));
-    }
-
-
-
 
 }
