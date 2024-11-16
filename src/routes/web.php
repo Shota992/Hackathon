@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
     Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
     Route::post('/memo/{id}', [MemoController::class, 'softDelete'])->name('memo.softDelete');
+    Route::get('/memo/{id}/edit', [MemoController::class, 'edit'])->name('memo.edit');
+    Route::patch('/memo/{id}', [MemoController::class, 'update'])->name('memo.update');
 
     //非公開ディレクトリから画像を表示するためのカスタムルート設定
     Route::get('/user-icon/{filename}', function ($filename) {

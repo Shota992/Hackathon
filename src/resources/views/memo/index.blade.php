@@ -18,21 +18,16 @@
                         {{-- @if (Auth::id() === $article->user_id) --}}
                         <div class="flex justify-end bg-gray-300 px-3 py-2">
                             <div class="flex justify-end bg-gray-300 px-1 py-2">
-                                <a href="">
-                                    <form action="{{ route('memo.softDelete', $memo->id) }}" method="POST">
-                                        @csrf
-                                        <x-secondary-button>
-                                            削除
-                                        </x-secondary-button>
-                                    </form>
-                                </a>
+                                <form action="{{ route('memo.softDelete', $memo->id) }}" method="POST">
+                                    @csrf
+                                    @method('POST') <!-- HTTPメソッドをPOSTで送信 -->
+                                    <x-danger-button type="submit">削除</x-danger-button>
+                                </form>
                             </div>
                             {{-- @if (Auth::id() === $article->user_id) --}}
                             <div class="flex justify-end bg-gray-300 px-1 py-2">
-                                <a href="">
-                                    <x-secondary-button>
-                                        編集
-                                    </x-secondary-button>
+                                <a href="{{ route('memo.edit', $memo->id) }}">
+                                    <x-secondary-button>編集</x-secondary-button>
                                 </a>
                             </div>
                             {{-- @endif --}}
@@ -44,4 +39,4 @@
             </div>
         </div>
     </div>
-    </x-body-common>
+</x-body-common>
