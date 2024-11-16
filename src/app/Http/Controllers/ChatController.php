@@ -70,3 +70,4 @@ class ChatController extends Controller
         return redirect()->back()->with('status', '匿名設定が変更されました。');
     }
 
+  }
