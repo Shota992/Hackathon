@@ -30,20 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-<<<<<<< HEAD
+
 Route::get('/timeline', [PostController::class, 'timeline'])->name('timeline');
 Route::get('/mypost', [PostController::class, 'mypost'])->name('mypost');
 Route::get('/chat/index', [ProfileController::class, 'index'])->name('chat.index');
-=======
+
 //新規投稿登録画面のルート設定
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
-
-Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
-Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
-Route::get('/chat/index', [ProfileController::class, 'chat'])->name('chat.index');
->>>>>>> 691e4fce3878436449af387608a2881ce338c5fa
 
 
 Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
