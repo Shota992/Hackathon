@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 });
 
 # メモ一覧画面
-Route::get('/memo', [MemoController::class, 'index'])
-->name('memo.index');
+Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
+
 
 require __DIR__.'/auth.php';
