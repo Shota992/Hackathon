@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MemoController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,9 +32,15 @@ Route::middleware('auth')->group(function () {
 
 //新規投稿登録画面のルート設定
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-//新規投稿登録を保存するルート設定
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
 
+Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
+Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
+Route::get('/chat/index', [ProfileController::class, 'index'])->name('chat.index');
+
+
+Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
+// Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
 
 require __DIR__.'/auth.php';
