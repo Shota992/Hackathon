@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MemoController;
 use App\Http\Controllers\PostController;
@@ -37,7 +38,10 @@ Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
 Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
 Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
-Route::get('/chat/index', [ProfileController::class, 'chat'])->name('chat.index');
+
+// チャット機能
+Route::get('/chat/index', [ChatController::class, 'chat'])->name('chat.index');
+Route::get('/chat/show/{id}', [ChatController::class, 'chatShow'])->name('chat.show');
 
 
 Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');

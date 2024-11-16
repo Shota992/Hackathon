@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use App\Models\Chat;
 
 class ProfileController extends Controller
 {
@@ -68,20 +67,4 @@ class ProfileController extends Controller
     {
         return view('mypost');
     }
-
-    public function chat()
-    {
-        $userId = Auth::id();
-
-        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
-            $query->where('post_user_id', $userId)
-                  ->orWhere('listener_user_id', $userId);
-        })->with('posting.user')->get();
-
-        return view('chat.index', compact('chats'));
-    }
-
-
-
-
 }
