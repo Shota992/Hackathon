@@ -1,15 +1,13 @@
-<x-app-layout>
-    {{-- <body class="h-screen w-screen overflow-hidden"> --}}
-        <main class="flex">
-          <x-sidebar :user="$user" />
-
-            <div class="main w-full bg-white h-screen ml-60 pt-10 px-12 pb-20">
-                <x-main pagename="CHAT DETAIL">
-                    <a href="#top" class="fixed top-20  left-20 flex items-stretch gap-4 bg-white shadow-md p-4 -m-8">
+<x-body-common :title="'CHAT DETAIL'">
+                    <a href="#top" class="fixed top-20  left-20 flex items-stretch gap-4 bg-white shadow-md p-4 -m-8 ">
                         <img src="{{ asset('images/megaphon.svg') }}" alt="Megaphon" class="h-8 w-8">
                     </a>
-
-                    <div class="flex justify-end mb-4">
+                    <div class="fixed flex flex-stretch items-center gap-4 bg-white w-full shadow-md  p-4 -m-8 z-20">
+                        <p>
+                            {{ \Illuminate\Support\Str::limit($posting->content, 20, '...') }}
+                        </p>
+                    </div>
+                    <div class="flex justify-end mb-4 z-30">
                         <form action="{{ route('chat.toggle-anonymity', $posting->id) }}" method="POST">
                             @csrf
                             @method('PATCH')
@@ -25,24 +23,35 @@
 
                     <!-- 投稿内容 -->
                         <div class="flex flex-col gap-6 mb-12 mt-12" id=top>
-                            <div class="flex items-center gap-4 bg-gray-200 w-full shadow-md mt-4 ml-4 p-4">
-                                <div class="flex justify-end text-sm">
-                                    {{ $posting->created_at->format('Y/m/d') }}
-                                </div>
-                                <div class="bg-yellow-300 w-12 h-12 rounded-full flex-none"></div>
-                                <div class="gap-4 w-full">
-                                    @if ($posting->anonymity == 1)
+                            @if ($posting->anonymity == 1)
+                                <div class="flex items-center gap-4 bg-gray-200 w-full shadow-md mt-4 ml-4 p-4">
+                                    <div class="flex justify-end text-sm">
+                                        {{ $posting->created_at->format('Y/m/d') }}
+                                    </div>
+                                    <img src="{{ asset('images/who.png') }}" alt="Anonymous Icon" class="object-cover w-12 h-12">
+                                    <div class="gap-4 w-full">
                                         <div class="font-bold">
                                             匿名
                                         </div>
-                                    @else
+                                        <div class="">{{ $posting->content }}</div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="flex items-center gap-4 bg-gray-200 w-full shadow-md mt-4 ml-4 p-4">
+                                    <div class="flex justify-end text-sm">
+                                        {{ $posting->created_at->format('Y/m/d') }}
+                                    </div>
+                                    <div class="bg-gray-300 w-12 h-12 rounded-full flex-none overflow-hidden">
+                                        <img src="{{ route('user.icon', $posting->user->icon_image) }}" alt="User Icon" class="object-cover w-12 h-12">
+                                    </div>
+                                    <div class="gap-4 w-full">
                                         <div class="font-bold">
                                             {{ $posting->user->name }}
                                         </div>
-                                    @endif
-                                    <div class="">{{ $posting->content }}</div>
+                                        <div class="">{{ $posting->content }}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
     
                         <!-- チャット参加者 -->
@@ -69,7 +78,9 @@
                                     @if ($message->is_mine) justify-end text-right @else justify-start @endif bg-gray-100 w-full shadow-md">
                                     @if (!$message->is_mine)
                                         <!-- 他人のメッセージ -->
-                                        <div class="bg-gray-300 w-12 h-12 rounded-full flex-none"></div>
+                                        <div class="bg-gray-300 w-12 h-12 rounded-full flex-none overflow-hidden">
+                                            <img src="{{ route('user.icon', $chatUser->listenerUser->icon_image) }}" alt="User Icon" class="object-cover w-12 h-12">
+                                        </div>
                                         <div class="w-full">
                                             <div class="font-bold">
                                                 {{ $chatUser->listenerUser->name }}
@@ -78,19 +89,27 @@
                                             <div>{{ $message->message }}</div>
                                         </div>
                                     @else
-                                        <!-- 自分のメッセージ -->
-                                        <div class="w-full">
-                                            <div class="font-bold">
-                                                <span class="text-sm text-gray-500">({{ $message->created_at->format('Y/m/d H:i') }})</span>
-                                                @if ($posting->anonymity == 1)
-                                                    匿名
-                                                @else
-                                                {{ $posting->user->name }}
-                                                @endif
+                                        @if ($posting->anonymity == 1)
+                                            <div class="w-full">
+                                                <div class="font-bold">
+                                                    <span class="text-sm text-gray-500">({{ $message->created_at->format('Y/m/d H:i') }})</span>
+                                                        匿名
+                                                </div>
+                                                <div>{{ $message->message }}</div>
                                             </div>
-                                            <div>{{ $message->message }}</div>
-                                        </div>
-                                        <div class="bg-gray-300 w-12 h-12 rounded-full flex-none"></div>
+                                            <img src="{{ asset('images/who.png') }}" alt="Anonymous Icon" class="object-cover w-12 h-12">
+                                        @else
+                                            <div class="w-full">
+                                                <div class="font-bold">
+                                                    <span class="text-sm text-gray-500">({{ $message->created_at->format('Y/m/d H:i') }})</span>
+                                                    {{ $posting->user->name }}
+                                                </div>
+                                                <div>{{ $message->message }}</div>
+                                            </div>
+                                            <div class="bg-gray-300 w-12 h-12 rounded-full flex-none overflow-hidden">
+                                                <img src="{{ route('user.icon', $posting->user->icon_image) }}" alt="User Icon" class="object-cover w-12 h-12">
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                             @empty
@@ -107,20 +126,11 @@
                             </div>
 
                         </div>
-                </x-main>
                     <a href="#latest-message" class="fixed bottom-6 right-0 bg-gray-500 text-white p-4 rounded-full shadow-lg hover:bg-gray-600 flex items-center justify-center h-16 w-16">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </a>
-                
-
-
-
-
-            </div>
-        </main>
-    {{-- </body> --}}
-</x-app-layout>
+</x-body-common>
 
 

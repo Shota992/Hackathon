@@ -22,6 +22,11 @@ class ChatController extends Controller
                     ->orWhere('listener_user_id', $userId);
         })->with('posting.user')->get();
 
+        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
+            $query->where('post_user_id', $userId)
+                    ->orWhere('listener_user_id', $userId);
+        })->with('posting.user')->paginate(20); // 1ページあたり10件
+
         return view('chat.index', compact('chats'));
     }
 
@@ -69,4 +74,7 @@ class ChatController extends Controller
         // リダイレクト先で状態が更新される
         return redirect()->back()->with('status', '匿名設定が変更されました。');
     }
+
+    
 }
+
