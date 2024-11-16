@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Posting;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,8 +15,19 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        //ここにtitleやcontent中身を記述。
         
+        // バリデーション
+        $validated = $request->validate([
+            'content' => 'required|max:255',
+            'anonymity' => 'required|boolean',
+        ]);
+
+        // データ保存
+        Posting::create([
+            'content' => $validated['content'],
+            'anonymity' => $validated['anonymity'],
+            'user_id' => auth()->id(), // ログインユーザーのIDを保存
+        ]);
         return redirect()->route('posts.create')->with('success', '投稿が保存されました！');
     }
 }

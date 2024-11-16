@@ -13,6 +13,8 @@ class Posting extends Model
 
     protected $table = 'postings';
 
+    
+
     protected $fillable = [
         'anonymity',
         'content',
