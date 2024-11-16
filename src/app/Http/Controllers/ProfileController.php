@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Posting;
+use App\Models\User;
 use App\Models\Chat;
 
 class ProfileController extends Controller
@@ -59,29 +61,10 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function timeline()
+    public function sidebar()
     {
-        return view('timeline');
+        $user = Auth::user();
+        return view('components.sidebar', compact('user'));
     }
-
-    public function mypost()
-    {
-        return view('mypost');
-    }
-
-    public function chat()
-    {
-        $userId = Auth::id();
-
-        $chats = Chat::whereHas('chatUsers', function ($query) use ($userId) {
-            $query->where('post_user_id', $userId)
-                  ->orWhere('listener_user_id', $userId);
-        })->with('posting.user')->get();
-
-        return view('chat.index', compact('chats'));
-    }
-
-
-
 
 }

@@ -9,7 +9,7 @@
               <x-main pagename="CHAT">
                   <div class="flex flex-col gap-6 mb-12">
                       @forelse ($chats as $chat)
-                          <a href="">
+                          <a href="{{ route('chat.show', $chat->id)}}">
                             <div class="flex items-center gap-4 bg-gray-200 w-full shadow-md mt-4 ml-4 p-4">
                                 <div class="flex justify-end text-sm">
                                     {{ $chat->posting->created_at->format('Y/m/d') }}
