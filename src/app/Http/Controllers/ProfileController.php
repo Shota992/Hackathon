@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use App\Models\Posting;
 use App\Models\User;
@@ -73,32 +74,33 @@ class ProfileController extends Controller
         return view('auth.user-edit', compact('user'));
     }
 
-    // public function updateProfile(Request $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
+    public function updateProfile(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
 
-    //     $request->validate([
-    //         'generation' => ['required', 'numeric', 'between:3.0,7.0'],
-    //         'target' => ['required', 'string', 'max:255'],
-    //         'icon_image' => ['nullable', 'image', 'max:2048'],
-    //     ]);
+        $request->validate([
+            'generation' => ['required', 'numeric', 'between:3.0,7.0'],
+            'target' => ['required', 'string', 'max:255'],
+            'icon_image' => ['nullable', 'image', 'max:2048'],
+        ]);
 
-    //     $user->generation = $request->generation;
-    //     $user->target = $request->target;
+        $user->generation = $request->generation;
+        $user->target = $request->target;
 
-    //     if ($request->hasFile('icon_image')) {
-    //         // 古い画像を削除
-    //         if ($user->icon_image) {
-    //             Storage::delete($user->icon_image);
-    //         }
+        if ($request->hasFile('icon_image')) {
+            // 古い画像を削除
+            if ($user->icon_image) {
+                Storage::delete('public/private/user_icons/' . $user->icon_image); // 古いファイルを削除
+            }
+    
+            // 新しい画像を保存
+            $path = $request->file('icon_image')->store('public/private/user_icons'); // 指定ディレクトリに保存
+            $user->icon_image = basename($path); // ファイル名のみ保存
+        }
 
-    //         // 新しい画像を保存
-    //         $user->icon_image = $request->file('icon_image')->store('icon_images', 'public');
-    //     }
+        $user->save();
 
-    //     $user->save();
-
-    //     return redirect()->route('user.editProfile', $user->id)->with('success', 'User information updated successfully.');
-    // }
+        return redirect()->route('user.editProfile', $user->id)->with('success', 'User information updated successfully.');
+    }
 
 }
