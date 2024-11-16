@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MemoController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,15 @@ Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.se
 Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
 Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
 // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+
+//非公開ディレクトリから画像を表示するためのカスタムルート設定
+Route::get('/user-icon/{filename}', function ($filename) {
+    $path = 'public/private/user_icons/' . $filename;
+    if (!Storage::exists($path)) {
+        abort(404);
+    }
+    return Storage::download($path);
+})->name('user.icon');
 
 
 require __DIR__.'/auth.php';
