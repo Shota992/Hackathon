@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class ChatUser extends Model
 {
@@ -39,5 +40,21 @@ class ChatUser extends Model
     public function listenerUser()
     {
         return $this->belongsTo(User::class, 'listener_user_id');
+    }
+
+    /**
+     * カスタムアクセサ: Authユーザーが投稿者かを識別
+     */
+    public function getIsPostUserAttribute()
+    {
+        return $this->post_user_id === Auth::id();
+    }
+
+    /**
+     * カスタムアクセサ: Authユーザーがリスナーかを識別
+     */
+    public function getIsListenerUserAttribute()
+    {
+        return $this->listener_user_id === Auth::id();
     }
 }
