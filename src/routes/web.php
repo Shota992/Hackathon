@@ -52,8 +52,9 @@ Route::middleware('auth')->group(function () {
 
     // メモ機能
     Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
-    Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
-    // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+    Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
+    Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
+    Route::post('/memo/{id}', [MemoController::class, 'softDelete'])->name('memo.softDelete');
 
     //非公開ディレクトリから画像を表示するためのカスタムルート設定
     Route::get('/user-icon/{filename}', function ($filename) {
@@ -67,15 +68,6 @@ Route::middleware('auth')->group(function () {
   });
     require __DIR__.'/auth.php';
     
-
-
-# メモ一覧画面
-Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
-Route::post('/memo/{id}', [MemoController::class, 'softDelete'])->name('memo.softDelete');
-
-Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
-Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
-
 
 
 
