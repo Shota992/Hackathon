@@ -6,7 +6,7 @@
                     <div class="flex justify-end text-xs">
                         作成日時：{{ $chat->created_at->format('Y/m/d H:i') }}
                     </div>
-                    {{-- アイコンと名前の表示 --}}
+
                     @if ($chat->posting->anonymity == 1)
                         {{-- 匿名の場合 --}}
                         <div class="w-12 h-12 rounded-full overflow-hidden flex-none">
