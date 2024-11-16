@@ -3,18 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Posting;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
 
-    public function timeline()
-    {
+  public function timeline()
+  {
+      $posts = Posting::with('user')->latest()->paginate(10);
 
-        $posts = Posting::with('user')->latest()->get();
-        return view('timeline', compact('posts'));
+      // 現在のログインユーザーの情報を取得
+      $user = Auth::user();
 
-    }
+      // ビューに渡すデータを整理して渡す
+      return view('timeline', [
+          'posts' => $posts,
+          'user' => $user,
+      ]);
+  }
 
     public function mypost()
     {
