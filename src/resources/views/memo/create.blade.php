@@ -1,12 +1,10 @@
-<x-app-layout>
-<body class="h-screen w-screen overflow-hidden">
+<x-body-common :title="'MEMO CREATE'">
+    <body class="h-screen w-screen overflow-hidden">
     <main class="flex">
         <!-- サイドバーをコンポーネントとして呼び出す -->
-        <x-sidebar username="POSSE太郎" goal="達成する目標を記述" />
 
         <!-- メインコンテンツ -->
-        <div class="main w-full bg-white h-screen pt-16 px-20 pb-20">
-            <h2 class="text-xl  mb-4 border-b-2 ">Memo Create</h2>
+        <div class="main w-full  pb-20">
             <div class=" w-full h-full bg-red-200 p-8 ">
                 {{-- <div action="{{ route('memo.store') }}" method="POST"> --}}
                 <form method="POST" action="{{ route('memo.store')}}">
@@ -39,4 +37,4 @@
         </div>
     </main>
 </body>
-</x-app-layout >
+</x-body-common>

@@ -34,20 +34,19 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        
         // バリデーション
         $validated = $request->validate([
             'content' => 'required|max:255',
-            'anonymity' => 'required|boolean',
         ]);
-
+    
         // データ保存
         Posting::create([
             'content' => $validated['content'],
-            'anonymity' => $validated['anonymity'],
+            'anonymity' => $request->input('anonymity', 0), // デフォルト値を0に設定
             'user_id' => auth()->id(), // ログインユーザーのIDを保存
         ]);
-        return redirect()->route('posts.create')->with('success', '投稿が保存されました！');
+    
+        return redirect()->route('timeline')->with('success', '投稿が保存されました！');
     }
 
 
