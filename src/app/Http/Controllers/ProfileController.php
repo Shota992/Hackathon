@@ -57,4 +57,23 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function timeline()
+    {
+        return view('timeline');
+    }
+
+    public function mypost()
+    {
+        return view('mypost');
+    }
+
+    public function index()
+    {
+        return view('chat.index');
+    }
+
+
+
+
 }
