@@ -1,10 +1,10 @@
 <x-app-layout>
 
-    <body class="h-screen w-screen overflow-hidden">
+    {{-- <body class="h-screen w-screen overflow-hidden"> --}}
         <main class="flex">
-            <x-sidebar username="{{ Auth::user()->name }}" goal="達成する目標を記述" />
+          <x-sidebar :user="$user" />
 
-            <div class="main w-full bg-white h-screen pt-16 px-20 pb-20">
+            <div class="main w-full bg-white h-screen ml-60 pt-10 px-12 pb-20">
                 <x-main pagename="CHAT DETAIL">
                     <!-- 投稿内容 -->
                     <div class="flex flex-col gap-6 mb-12">
@@ -85,5 +85,5 @@
                 </x-main>
             </div>
         </main>
-    </body>
+    {{-- </body> --}}
 </x-app-layout>
