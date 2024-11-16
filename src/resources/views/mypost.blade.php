@@ -5,9 +5,9 @@
             <div class="flex justify-end">{{ $post->created_at }}</div>
             <div class="flex items-center gap-4">
                 <div class="bg-yellow-300 w-8 h-8 rounded-full "></div>
-                <div>{{ $memo->content }}</div>
+                <div>{{ $user->name }}</div>
             </div>
-            <div class="ml-12 mt-4">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaa</div>
+            <div class="ml-12 mt-4">{{ $post->content }}</div>
         </div>
         <div class="flex flex-col ml-32 gap-4 rounded">
             <!-- 吹き出し1 -->
@@ -22,6 +22,6 @@
         </div>
     </div>
     @endforeach
-    {{-- <x-pagination :paginator="$posts" /> --}}
+    <x-pagination :paginator="$page" />
 </x-body-common>
 
