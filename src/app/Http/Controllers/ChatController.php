@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\ChatUser;
 use App\Models\Message;
 use App\Models\Posting;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
+
   public function chat()
   {
       $userId = Auth::id();
@@ -68,4 +70,3 @@ class ChatController extends Controller
         return redirect()->back()->with('status', '匿名設定が変更されました。');
     }
 
-}

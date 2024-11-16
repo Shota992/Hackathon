@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Memo;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class MemoController extends Controller
 {
@@ -13,28 +12,41 @@ class MemoController extends Controller
         $memos = Memo::all();
         return view('memo.index', ['memos' => $memos]);
     }
-    
-    public function memocreate()
+
+    public function softDelete($id)
     {
-        return view('memo/create');
+        $delmemo = Memo::findOrFail($id);
+        $delmemo->delete(); // soft deleteを実行
+        
+
+        return redirect()->back()->with('success', 'Post deleted successfully.');
     }
 
-    // public function store(Request $request)
-    // {
-    //     バリデーション
-    //     $request->validate([
-    //         'title' => 'required|string|max:255',
-    //         'memo' => 'required|string|max:1000',
-    //     ]);
+    public function create(){
+        $userID = Auth::id();
+        return view('memo.create', [ 'userID' => $userID]);
+    }
+    
 
-    //     新しいメモの作成
-    //     $memo = new Memo();
-    //     $memo->title = $request->title;
-    //     $memo->memo = $request->memo;
-    //     $memo->save();
+    public function store(Request $request)
+    {
+        
+        $userID = Auth::id();
+        // $request->validate([
+        //     'title' => 'required',
+        //     'content' => 'required',
+        //     'user_id' => 'required',
+        // ]);
+        
 
-    //     メモが保存された後のリダイレクトやメッセージ表示
-    //     return redirect()->route('timeline.index')->with('success', 'メモが作成されました！');
-    // }>>>>>>> ac235eed54afc19643930fc0813440eb4ba3f62a
+        Memo::create([
+            'title' => $request->title,
+            'content' => $request->input('content'),
+            'user_id' => $userID,
+            'posting_id' => 1,
+        ]);
+
+        //return redirect()->route('memo.index')->with('success', 'メモが保存されました！');
+    }
 }
 

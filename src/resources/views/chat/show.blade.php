@@ -1,9 +1,9 @@
 <x-app-layout>
-    <body class="h-screen w-screen overflow-hidden">
+    {{-- <body class="h-screen w-screen overflow-hidden"> --}}
         <main class="flex">
-            {{-- <x-sidebar :name="Auth::user()->name" :target="Auth::user()->target" /> --}}
+          <x-sidebar :user="$user" />
 
-            <div class="main w-full bg-white h-screen px-20 pb-20">
+            <div class="main w-full bg-white h-screen ml-60 pt-10 px-12 pb-20">
                 <x-main pagename="CHAT DETAIL">
                     <a href="#top" class="fixed top-20  left-20 flex items-stretch gap-4 bg-white shadow-md p-4 -m-8">
                         <img src="{{ asset('images/megaphon.svg') }}" alt="Megaphon" class="h-8 w-8">
@@ -120,7 +120,7 @@
 
             </div>
         </main>
-    </body>
+    {{-- </body> --}}
 </x-app-layout>
 
 
