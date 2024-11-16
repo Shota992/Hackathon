@@ -70,4 +70,30 @@ class ChatController extends Controller
         return redirect()->back()->with('status', '匿名設定が変更されました。');
     }
 
+    public function create(Request $request)
+{
+    $request->validate([
+        'posting_id' => 'required|exists:postings,id',
+    ]);
+
+    // 対象の投稿を取得
+    $posting = Posting::findOrFail($request->posting_id);
+
+    // 新しいチャットを作成
+    $chat = Chat::create([
+        'permit' => 1, // 必要に応じて変更
+        'posting_id' => $posting->id,
+    ]);
+
+    // チャットユーザーを登録
+    ChatUser::create([
+        'chat_id' => $chat->id,
+        'post_user_id' => $posting->user_id,
+        'listener_user_id' => Auth::id(),
+    ]);
+
+    // 作成したチャット画面にリダイレクト
+    return redirect()->route('chat.show', $chat->id);
+}
+
   }
