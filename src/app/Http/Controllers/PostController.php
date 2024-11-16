@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Posting;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -23,10 +25,6 @@ class PostController extends Controller
       ]);
   }
 
-    public function mypost()
-    {
-        return view('mypost');
-    }
 
     public function create()
     {
@@ -50,6 +48,14 @@ class PostController extends Controller
             'user_id' => auth()->id(), // ログインユーザーのIDを保存
         ]);
         return redirect()->route('posts.create')->with('success', '投稿が保存されました！');
+    }
 
+
+    public function mypost()
+    {
+        $messages = Message::all();
+        $posts = Post::all(); 
+        $users = User::all();
+        return view('mypost', compact('messages', 'posts','users'));
     }
 }
