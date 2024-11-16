@@ -33,27 +33,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/auth/user/{id}/edit-profile', [ProfileController::class, 'editProfile'])->name('user.editProfile');
     Route::put('/auth/user/{id}/update-profile', [ProfileController::class, 'updateProfile'])->name('user.updateProfile');
-});
-
-
-// ポスト機能
-Route::get('/timeline', [PostController::class, 'timeline'])->name('timeline');
-Route::get('/mypost', [PostController::class, 'mypost'])->name('mypost');
-Route::get('/chat/index', [PostController::class, 'index'])->name('chat.index');
-
-//新規投稿登録画面のルート設定
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-
-// チャット機能
-Route::get('/chat/index', [ChatController::class, 'chat'])->name('chat.index');
-Route::get('/chat/show/{id}', [ChatController::class, 'chatShow'])->name('chat.show');
-Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
-
-// メモ機能
-Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
-Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
-// Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+    
+    // ポスト機能
+    Route::get('/timeline', [PostController::class, 'timeline'])->name('timeline');
+    Route::get('/mypost', [PostController::class, 'mypost'])->name('mypost');
+    Route::get('/chat/index', [PostController::class, 'index'])->name('chat.index');
+    
+    //新規投稿登録画面のルート設定
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    
+    // チャット機能
+    Route::get('/chat/index', [ChatController::class, 'chat'])->name('chat.index');
+    Route::get('/chat/show/{id}', [ChatController::class, 'chatShow'])->name('chat.show');
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+    
+    // メモ機能
+    Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
+    Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
+    // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
 
     //非公開ディレクトリから画像を表示するためのカスタムルート設定
     Route::get('/user-icon/{filename}', function ($filename) {
@@ -67,4 +65,30 @@ Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.cre
   });
     require __DIR__.'/auth.php';
     
+
+
+# メモ一覧画面
+Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
+Route::post('/memo/{id}', [MemoController::class, 'softDelete'])->name('memo.softDelete');
+
+Route::get('/memo/create', [MemoController::class, 'create'])->name('memo.create');
+Route::post('/memo/create', [MemoController::class, 'store'])->name('memo.store');
+
+
+
+
+
+// Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+
+//非公開ディレクトリから画像を表示するためのカスタムルート設定
+Route::get('/user-icon/{filename}', function ($filename) {
+    $path = 'public/private/user_icons/' . $filename;
+    if (!Storage::exists($path)) {
+        abort(404);
+    }
+    return Storage::download($path);
+})->name('user.icon');
+
+
+require __DIR__.'/auth.php';
 

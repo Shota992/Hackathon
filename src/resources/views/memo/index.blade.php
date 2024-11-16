@@ -6,9 +6,7 @@
     </x-slot> --}}
 
     <body>
-        {{-- @if (session('success'))
-            <x-alert :message="session('success')" />
-        @endif --}}
+        
 
         <div class="flex max-w-4xl mx-auto px-6 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
