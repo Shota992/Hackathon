@@ -11,7 +11,7 @@ class PostController extends Controller
 
   public function timeline()
   {
-      $posts = Posting::with('user')->latest()->get();
+      $posts = Posting::with('user')->latest()->paginate(10);
 
       // 現在のログインユーザーの情報を取得
       $user = Auth::user();

@@ -1,4 +1,4 @@
-<div class="side w-80 bg-cyan-700 h-screen p-6 pt-8 text-white">
+<div class="side w-60 bg-cyan-800 h-screen p-6 pt-8 text-white fixed">
   <div class="flex flex-col gap-12">
       <div class="flex flex-col gap-4">
           <div class="w-24">
