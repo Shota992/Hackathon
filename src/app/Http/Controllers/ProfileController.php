@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Posting;
+use App\Models\User;
+use App\Models\Chat;
 
 class ProfileController extends Controller
 {
@@ -57,4 +60,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function sidebar()
+    {
+        $user = Auth::user();
+        return view('components.sidebar', compact('user'));
+    }
+
 }
