@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MemoController;
 use App\Http\Controllers\PostController;
@@ -30,17 +31,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// ポスト機能
+Route::get('/timeline', [PostController::class, 'timeline'])->name('timeline');
+Route::get('/mypost', [PostController::class, 'mypost'])->name('mypost');
+Route::get('/chat/index', [PostController::class, 'index'])->name('chat.index');
+
 //新規投稿登録画面のルート設定
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 
+// チャット機能
+Route::get('/chat/index', [ChatController::class, 'chat'])->name('chat.index');
+Route::get('/chat/show/{id}', [ChatController::class, 'chatShow'])->name('chat.show');
+Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
 
-Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
-Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
-Route::get('/chat/index', [ProfileController::class, 'chat'])->name('chat.index');
-
-
+// メモ機能
+Route::get('/memo', [MemoController::class, 'index'])->name('memo.index');
 Route::get('memo/create', [MemoController::class, 'memocreate'])->name('memo.create');
 // Route::post('/memo/store', [MemoController::class, 'store'])->name('memo.store');
+
 
 require __DIR__.'/auth.php';
