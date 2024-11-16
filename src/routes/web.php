@@ -31,11 +31,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 // ポスト機能
-Route::get('/timeline', [ProfileController::class, 'timeline'])->name('timeline');
+Route::get('/timeline', [PostController::class, 'timeline'])->name('timeline');
+Route::get('/mypost', [PostController::class, 'mypost'])->name('mypost');
+Route::get('/chat/index', [PostController::class, 'index'])->name('chat.index');
+
+//新規投稿登録画面のルート設定
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::get('/mypost', [ProfileController::class, 'mypost'])->name('mypost');
 
 // チャット機能
 Route::get('/chat/index', [ChatController::class, 'chat'])->name('chat.index');
