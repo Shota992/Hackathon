@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Message extends Model
 {
@@ -27,5 +28,10 @@ class Message extends Model
     public function sender()
     {
         return $this->belongsTo(User::class, 'send_user_id');
+    }
+
+    public function getIsMineAttribute()
+    {
+        return $this->send_user_id === Auth::id();
     }
 }
