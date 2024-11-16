@@ -23,11 +23,8 @@
             </div>
 
             <div class="w-full h-full sm:max-w-md mt-6 px-6 py-4 bg-white border-red-700 border-t-4  shadow-md overflow-hidden sm:rounded-lg">
-                <div class="flex justify-center">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </div>
-                <div class="flex justify-center">
-                    <p class="font-bold text-4xl">LOG IN</p>
+                <div class="flex justify-center my-8">
+                    <img src="{{ asset('images/logo_icon_black.png') }}" alt="CoreConnect" class="h-12 w-auto">
                 </div>
                 {{ $slot }}
             </div>
