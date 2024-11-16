@@ -36,7 +36,7 @@
         </div>
         <div class="fixed bottom-6 right-6 z-50" style="position: fixed; bottom: 48px; right: 48px;">
             <a href="{{ route('memo.create') }}" 
-                class="bg-white hover:bg-gray-100 text-black font-bold py-3 px-6 rounded-full shadow-lg focus:outline-none">
+                class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-6 rounded-full shadow-lg focus:outline-none">
                 作成
             </a>
         </div>
